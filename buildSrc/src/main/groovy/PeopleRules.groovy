@@ -16,7 +16,11 @@ class PeopleRules extends RuleSource {
     @Rules
     void applyValidateRules(ValidateRules rules, @Each Person person)  {}
     @Mutate
-    void createHelloTask(ModelMap<Task> tasks, ModelMap<Person> people) {
+    void createHelloTask(ModelMap<Task> tasks) {
+        tasks.create("hello")
+    }
+    @Mutate
+    void createSinglePersonHelloTask(ModelMap<Task> tasks, ModelMap<Person> people) {
         people.each { p ->
             tasks.create("hello${p.name}") {
                 doLast {
@@ -33,7 +37,7 @@ class PeopleRules extends RuleSource {
 abstract class DefaultRules extends RuleSource {
     @Defaults
     void setDefaults(Person person) {
-        person.id = "${new UUID(person.name.hash, 0)}"
+        person.id = "${new UUID(person.name.hash, 'Person'.hash)}"
         person.firstName = person.name
     }
 }

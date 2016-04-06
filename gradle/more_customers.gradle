@@ -2,7 +2,7 @@
 model {
     people {
         Lucy(Person) {
-            lastName = 'Lu'
+            lastName = 'Liu'
         }
     }
 }

@@ -34,6 +34,27 @@ model {
         randomCustomers = project.properties.randomCustomers
     }
     people {
+        // static data.
+        Jack(Person) {
+            lastName = "Smith"
+            address {
+                street = 'Sunny Side Rd 22'
+                city = 'New York'
+            }
+        }
+        John(Person) {
+            lastName = "Doe"
+        }
+        Barry(Person) {
+            lastName = "White"
+        }
+        // apply some closures...
+        all {
+            if($.config.randomizeIds) {
+                id = "${UUID.randomUUID()}"
+            }
+        }
+        // programmatic configuration of data
         $.config.randomCustomers.times { i ->
             "Random${i}"(Person) {
                 id = "${UUID.randomUUID()}"
@@ -45,32 +66,14 @@ model {
                 }
             }
         }
-        Jack(Person) {
-            lastName = "Smith"
-            address {
-                street = 'Sunny Side Rd 22'
-                city = 'New York'
-            }
-        }
-        John(Person) {
-            lastName = "Doe"
-        }
-        all {
-            if($.config.randomizeIds) {
-                id = "${UUID.randomUUID()}"
-            }
-        }
-        Barry(Person) {
-            lastName = "White"
-        }
     }
 }
 
-// extended data.
+// extended data, if needed.
 if(project.hasProperty('moreCustomers')) {
     apply from: 'gradle/more_customers.gradle'
 }
 
-// more tasks
+// ad hoc tasks
 apply from: 'gradle/tasks.gradle'
 

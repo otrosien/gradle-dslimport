@@ -8,10 +8,6 @@ import org.gradle.model.RuleSource;
 class ConfigRules extends RuleSource {
     @Model
     void config(Config config) {}
-    @Mutate
-    void createHelloTask(ModelMap<Task> tasks, Config config) {
-        tasks.create("hello")
-    }
 }
 
 // you can inline the model here..
