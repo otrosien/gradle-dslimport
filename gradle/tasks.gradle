@@ -1,0 +1,15 @@
+model {
+    tasks {
+        // possible to inline additional tasks
+        listAddresses(Task) {
+            def people = $.people
+            doLast {
+                people.each { p ->
+                    if(p.address?.city != null) {
+                        println "Hey $p.firstName. Your address is $p.address.street, $p.address.city!"
+                    }
+                }
+            }
+        }
+    }
+}

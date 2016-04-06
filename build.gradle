@@ -1,0 +1,76 @@
+buildscript {
+    dependencies {
+        repositories {
+            mavenCentral()
+        }
+        dependencies {
+            classpath 'org.fluttercode.datafactory:datafactory:0.8'
+        }
+    }
+}
+
+////// for gradle source code
+apply plugin: "groovy"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile localGroovy()
+    compile gradleApi()
+}
+
+apply plugin: ConfigRules
+apply plugin: PeopleRules
+
+import org.fluttercode.datafactory.impl.DataFactory
+def dataFactory = new DataFactory()
+
+// core data
+model {
+    config {
+        randomizeIds = project.hasProperty('randomizeIds')
+        randomCustomers = project.properties.randomCustomers
+    }
+    people {
+        $.config.randomCustomers.times { i ->
+            "Random${i}"(Person) {
+                id = "${UUID.randomUUID()}"
+                firstName = dataFactory.getFirstName()
+                lastName = dataFactory.getLastName()
+                address {
+                    street = dataFactory.getAddress()
+                    city = dataFactory.getCity()
+                }
+            }
+        }
+        Jack(Person) {
+            lastName = "Smith"
+            address {
+                street = 'Sunny Side Rd 22'
+                city = 'New York'
+            }
+        }
+        John(Person) {
+            lastName = "Doe"
+        }
+        all {
+            if($.config.randomizeIds) {
+                id = "${UUID.randomUUID()}"
+            }
+        }
+        Barry(Person) {
+            lastName = "White"
+        }
+    }
+}
+
+// extended data.
+if(project.hasProperty('moreCustomers')) {
+    apply from: 'gradle/more_customers.gradle'
+}
+
+// more tasks
+apply from: 'gradle/tasks.gradle'
+
