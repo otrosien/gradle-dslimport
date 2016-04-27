@@ -1,4 +1,4 @@
-import org.gradle.model.Managed;
+import org.gradle.model.Managed
 
 @Managed
 interface Address {

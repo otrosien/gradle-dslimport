@@ -1,12 +1,12 @@
 import org.gradle.api.Task
-import org.gradle.model.Defaults;
+import org.gradle.model.Defaults
 import org.gradle.model.Each
 import org.gradle.model.Model
 import org.gradle.model.ModelMap
 import org.gradle.model.Mutate
 import org.gradle.model.RuleSource
 import org.gradle.model.Rules
-import org.gradle.model.Validate;
+import org.gradle.model.Validate
 
 class PeopleRules extends RuleSource {
     @Model

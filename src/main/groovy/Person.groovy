@@ -1,5 +1,5 @@
-import org.gradle.api.Named;
-import org.gradle.model.Managed;
+import org.gradle.api.Named
+import org.gradle.model.Managed
 
 @Managed
 interface Person extends Named {
