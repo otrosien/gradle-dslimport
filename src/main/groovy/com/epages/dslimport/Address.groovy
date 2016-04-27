@@ -1,3 +1,4 @@
+package com.epages.dslimport
 import org.gradle.model.Managed
 
 @Managed

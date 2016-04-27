@@ -1,8 +1,9 @@
+package com.epages.dslimport
 import org.gradle.api.Named
 import org.gradle.model.Managed
 
 @Managed
-interface Person extends Named {
+interface Customer extends Named {
 
     String getId()
     void setId(String s)

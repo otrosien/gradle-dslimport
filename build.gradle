@@ -1,79 +1,55 @@
-buildscript {
-    dependencies {
-        repositories {
-            mavenCentral()
-        }
-        dependencies {
-            classpath 'org.fluttercode.datafactory:datafactory:0.8'
-        }
-    }
-}
-
 ////// for gradle source code
 apply plugin: "groovy"
+apply plugin: "eclipse"
+apply plugin: "idea"
 
 repositories {
-    mavenCentral()
+    jcenter()
 }
 
 dependencies {
     compile localGroovy()
     compile gradleApi()
+    compile 'org.fluttercode.datafactory:datafactory:0.8'
 }
 
-apply plugin: ConfigRules
-apply plugin: PeopleRules
+wrapper {
+    distributionUrl = 'http://services.gradle.org/distributions/gradle-2.13-all.zip'
+}
 
-import org.fluttercode.datafactory.impl.DataFactory
-def dataFactory = new DataFactory()
+import com.epages.dslimport.*
+apply plugin: DataSetPlugin
+apply plugin: CustomerPlugin
 
 // core data
 model {
-    config {
-        randomizeIds = project.hasProperty('randomizeIds')
-        randomCustomers = project.properties.randomCustomers
-    }
-    people {
-        // static data.
-        Jack(Person) {
-            lastName = "Smith"
-            address {
-                street = 'Sunny Side Rd 22'
-                city = 'New York'
+    dataSets {
+        milestones(DataSet) {
+            customers {
+                Jack(Customer) {
+                    lastName = "Smith"
+                    address {
+                        street = 'Sunny Side Rd 22'
+                        city = 'New York'
+                    }
+                }
+                John(Customer) {
+                    lastName = "Doe"
+                }
+                Barry(Customer) {
+                    lastName = "White"
+                }
             }
         }
-        John(Person) {
-            lastName = "Doe"
+        testing(DataSet) {
+            customers {}
         }
-        Barry(Person) {
-            lastName = "White"
-        }
-        // apply some closures...
-        all {
-            if($.config.randomizeIds) {
-                id = "${UUID.randomUUID()}"
-            }
-        }
-        // programmatic configuration of data
-        $.config.randomCustomers.times { i ->
-            "Random${i}"(Person) {
-                id = "${UUID.randomUUID()}"
-                firstName = dataFactory.getFirstName()
-                lastName = dataFactory.getLastName()
-                address {
-                    street = dataFactory.getAddress()
-                    city = dataFactory.getCity()
+        video24(DataSet) {
+            customers {
+                Some(Customer) {
+                    lastName = "Body"
                 }
             }
         }
     }
 }
-
-// extended data, if needed.
-if(project.hasProperty('moreCustomers')) {
-    apply from: 'gradle/more_customers.gradle'
-}
-
-// ad hoc tasks
-apply from: 'gradle/tasks.gradle'
-
