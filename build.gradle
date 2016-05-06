@@ -18,38 +18,32 @@ wrapper {
 }
 
 import com.epages.dslimport.*
-apply plugin: DataSetPlugin
-apply plugin: CustomerPlugin
 
-// core data
+// CustomerPlugin transparently gets applied
+// apply plugin: CustomerPlugin
+apply plugin: RandomCustomerPlugin
+
 model {
-    dataSets {
-        milestones(DataSet) {
-            customers {
-                Jack(Customer) {
-                    lastName = "Smith"
-                    address {
-                        street = 'Sunny Side Rd 22'
-                        city = 'New York'
-                    }
-                }
-                John(Customer) {
-                    lastName = "Doe"
-                }
-                Barry(Customer) {
-                    lastName = "White"
-                }
+    customers {
+        Jack(Customer) {
+            firstName = 'Jack'
+            lastName = "Smith"
+            emailAddress = "jack@is-online.now"
+            address {
+                street = 'Sunny Side Rd 22'
+                city = 'New York'
             }
         }
-        testing(DataSet) {
-            customers {}
+        John(Customer) {
+            firstName = 'John'
+            lastName = "Doe"
         }
-        video24(DataSet) {
-            customers {
-                Some(Customer) {
-                    lastName = "Body"
-                }
-            }
+        Barry(Customer) {
+            firstName = 'Barry'
+            lastName = "White"
+        }
+        10.times { i ->
+            "Random${i}"(Customer)
         }
     }
 }

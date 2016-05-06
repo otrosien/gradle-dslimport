@@ -16,61 +16,52 @@ Here are some interesting parts of the output:
 ```
 ...
 
-+ config
-      | Type:   	Config
-      | Creator: 	ConfigRules#config
++ dataSets
+      | Type:   	org.gradle.model.ModelMap<com.epages.dslimport.DataSet>
+      | Creator: 	DataSetPlugin#dataSets
       | Rules:
-         ⤷ config { ... } @ build.gradle line 32, column 5
-    + randomCustomers
-          | Type:   	int
-          | Value:  	0
-          | Creator: 	ConfigRules#config
-    + randomizeIds
-          | Type:   	boolean
-          | Value:  	false
-          | Creator: 	ConfigRules#config
-+ people
-      | Type:   	org.gradle.model.ModelMap<Person>
-      | Creator: 	PeopleRules#people
-      | Rules:
-         ⤷ people { ... } @ build.gradle line 36, column 5
-    + Barry
-          | Type:   	Person
-          | Creator: 	Barry(Person) { ... } @ build.gradle line 63, column 9
-          | Rules:
-             ⤷ PeopleRules#applyDefaultRules
-             ⤷ PeopleRules#applyValidateRules
-             ⤷ DefaultRules#setDefaults
-             ⤷ all { ... } @ build.gradle line 58, column 9
-             ⤷ ValidateRules#validateLastNameIsNotNull
-        + address
-              | Type:   	Address
-              | Creator: 	Barry(Person) { ... } @ build.gradle line 63, column 9
-            + city
-                  | Type:   	java.lang.String
-                  | Value:  	null
-                  | Creator: 	Barry(Person) { ... } @ build.gradle line 63, column 9
-            + street
-                  | Type:   	java.lang.String
-                  | Value:  	null
-                  | Creator: 	Barry(Person) { ... } @ build.gradle line 63, column 9
-        + firstName
-              | Type:   	java.lang.String
-              | Value:  	Barry
-              | Creator: 	Barry(Person) { ... } @ build.gradle line 63, column 9
-        + id
-              | Type:   	java.lang.String
-              | Value:  	00000000-03cf-e17a-0000-000000000000
-              | Creator: 	Barry(Person) { ... } @ build.gradle line 63, column 9
-        + lastName
-              | Type:   	java.lang.String
-              | Value:  	White
-              | Creator: 	Barry(Person) { ... } @ build.gradle line 63, column 9
-        + name
-              | Type:   	java.lang.String
-              | Value:  	Barry
-              | Creator: 	Barry(Person) { ... } @ build.gradle line 63, column 9
-
+         ⤷ dataSets { ... } @ build.gradle line 26, column 5
+    + milestones
+          | Type:   	com.epages.dslimport.DataSet
+          | Creator: 	milestones(com.epages.dslimport.DataSet) { ... } @ build.gradle line 27, column 9
+        + customers
+              | Type:   	org.gradle.model.ModelMap<com.epages.dslimport.Customer>
+              | Creator: 	milestones(com.epages.dslimport.DataSet) { ... } @ build.gradle line 27, column 9
+            + Barry
+                  | Type:   	com.epages.dslimport.Customer
+                  | Creator: 	milestones(com.epages.dslimport.DataSet) { ... } @ build.gradle line 27, column 9 > create(Barry)
+                  | Rules:
+                     ⤷ CustomerPlugin#applyDefaultRules
+                     ⤷ CustomerPlugin#applyValidateRules
+                     ⤷ DefaultRules#setDefaults
+                     ⤷ ValidateRules#validateLastNameIsNotNull
+                + address
+                      | Type:   	com.epages.dslimport.Address
+                      | Creator: 	milestones(com.epages.dslimport.DataSet) { ... } @ build.gradle line 27, column 9 > create(Barry)
+                    + city
+                          | Type:   	java.lang.String
+                          | Value:  	null
+                          | Creator: 	milestones(com.epages.dslimport.DataSet) { ... } @ build.gradle line 27, column 9 > create(Barry)
+                    + street
+                          | Type:   	java.lang.String
+                          | Value:  	null
+                          | Creator: 	milestones(com.epages.dslimport.DataSet) { ... } @ build.gradle line 27, column 9 > create(Barry)
+                + firstName
+                      | Type:   	java.lang.String
+                      | Value:  	Barry
+                      | Creator: 	milestones(com.epages.dslimport.DataSet) { ... } @ build.gradle line 27, column 9 > create(Barry)
+                + id
+                      | Type:   	java.lang.String
+                      | Value:  	00000000-03cf-e17a-0000-000000000000
+                      | Creator: 	milestones(com.epages.dslimport.DataSet) { ... } @ build.gradle line 27, column 9 > create(Barry)
+                + lastName
+                      | Type:   	java.lang.String
+                      | Value:  	White
+                      | Creator: 	milestones(com.epages.dslimport.DataSet) { ... } @ build.gradle line 27, column 9 > create(Barry)
+                + name
+                      | Type:   	java.lang.String
+                      | Value:  	Barry
+                      | Creator: 	milestones(com.epages.dslimport.DataSet) { ... } @ build.gradle line 27, column 9 > create(Barry)
 ...
 ```
 

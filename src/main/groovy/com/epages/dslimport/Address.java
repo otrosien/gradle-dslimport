@@ -8,4 +8,8 @@ interface Address {
 
     String getCity();
     void setCity(String city);
+
+    default Boolean isEmpty() {
+        return Boolean.valueOf(getStreet() == null && getCity() == null);
+    }
 }

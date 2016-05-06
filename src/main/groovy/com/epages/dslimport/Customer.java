@@ -14,5 +14,12 @@ interface Customer extends Named {
     String getLastName();
     void setLastName(String s);
 
+    String getEmailAddress();
+    void setEmailAddress(String emailAddress);
+
     Address getAddress();
+
+    default String getFullName() {
+        return String.format("%s %s", getFirstName(), getLastName());
+    }
 }

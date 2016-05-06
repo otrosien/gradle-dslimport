@@ -6,6 +6,7 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 import org.gradle.model.Defaults;
 import org.gradle.model.Each
+import org.gradle.model.Finalize;
 import org.gradle.model.Model
 import org.gradle.model.ModelMap
 import org.gradle.model.Mutate
@@ -16,46 +17,53 @@ import org.gradle.model.Validate;
 
 class CustomerPlugin extends RuleSource {
 
-    @Rules
-    void applyDefaultRules(DefaultRules rules, @Each Customer customer)  {}
+    @Model
+    void customers(ModelMap<Customer> customers) {}
 
     @Rules
     void applyValidateRules(ValidateRules rules, @Each Customer customer)  {}
 
+    @Rules
+    void applyFinalizationRules(FinalizationRules rules, @Each Customer customer)  {}
+
     @Mutate
-    void createCustomerImportTask(ModelMap<Task> tasks, ModelMap<DataSet> dataSet) {
-        dataSet.each { final DataSet d ->
-            tasks.create("import${d.name.capitalize()}Customers", ImportCustomerTask) { task ->
-                task.customers = d.customers
-            }
+    void createCustomerGreetingTask(ModelMap<Task> tasks, final ModelMap<Customer> customers) {
+        tasks.create("greetCustomers", CustomerGreetingTask) {
+            it.customers = customers
         }
     }
 }
 
-abstract class DefaultRules extends RuleSource {
-
-    @Defaults
-    void setDefaults(Customer customer) {
-        customer.id = String.valueOf(new UUID(customer.name.hash, 'Customer'.hash))
-        customer.firstName = customer.name
+abstract class FinalizationRules extends RuleSource {
+    @Finalize
+    void setFinalizationValues(Customer customer) {
+        if (customer.id == null) {
+            customer.id = String.valueOf(new UUID(customer.name.hash, 'Customer'.hash))
+        }
     }
 }
 
 abstract class ValidateRules extends RuleSource {
     @Validate
     void validateLastNameIsNotNull(Customer customer) {
+        assert customer.id != null
+        assert UUID.fromString(customer.id) != null
         assert customer.lastName != null
     }
 }
 
-class ImportCustomerTask extends DefaultTask {
+class CustomerGreetingTask extends DefaultTask {
+
     @Input
     ModelMap<Customer> customers
 
     @TaskAction
-    def importCustomers() {
+    def greetCustomers() {
         customers.values().each({ c ->
-            println "${c.firstName} ${c.lastName}"
+            println "Greetings " + c.fullName + " (" + c.id + ")"
+            if(c.address != null && !c.address.empty) {
+                println "  You're from: ${c.address.street} ${c.address.city}"
+            }
         })
     }
 }
