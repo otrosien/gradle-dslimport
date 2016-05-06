@@ -60,10 +60,7 @@ class CustomerGreetingTask extends DefaultTask {
     @TaskAction
     def greetCustomers() {
         customers.values().each({ c ->
-            println "Greetings " + c.fullName + " (" + c.id + ")"
-            if(c.address != null && !c.address.empty) {
-                println "  You're from: ${c.address.street} ${c.address.city}"
-            }
+            println "Greetings " + c.fullName + ". Your ID is '" + c.id + "'"
         })
     }
 }

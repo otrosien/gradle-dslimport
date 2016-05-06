@@ -19,13 +19,19 @@ wrapper {
 
 import com.epages.dslimport.*
 
-// CustomerPlugin transparently gets applied
-// apply plugin: CustomerPlugin
-apply plugin: RandomCustomerPlugin
+// optional: CustomerPlugin actually gets applied transparently by RandomCustomerPlugin
+apply plugin: CustomerPlugin
+apply plugin: ProductPlugin
+
+if (project.properties.randomCustomers > 0) {
+    apply plugin: RandomCustomerPlugin
+}
+
+def randomCustomers = Integer.valueOf(project.properties.randomCustomers)
 
 model {
     customers {
-        Jack(Customer) {
+        jack(Customer) {
             firstName = 'Jack'
             lastName = "Smith"
             emailAddress = "jack@is-online.now"
@@ -34,16 +40,37 @@ model {
                 city = 'New York'
             }
         }
-        John(Customer) {
+        john(Customer) {
             firstName = 'John'
             lastName = "Doe"
         }
-        Barry(Customer) {
+        barry(Customer) {
             firstName = 'Barry'
             lastName = "White"
         }
-        10.times { i ->
-            "Random${i}"(Customer)
+        randomCustomers.times { i ->
+            "random${i}"(Customer)
         }
     }
 }
+
+// products
+model {
+    products {
+        a(Product) {
+            sku = 'abc-123'
+        }
+    }
+    tasks {
+        listProducts(Task) {
+            def products = $.products
+            doLast {
+                products.each { p ->
+                    println p.sku
+                }
+            }
+        }
+    }
+}
+
+apply from: 'gradle/tasks.gradle'

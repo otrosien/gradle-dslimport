@@ -1,8 +1,0 @@
-// extended data.
-model {
-    people {
-        Lucy(Person) {
-            lastName = 'Liu'
-        }
-    }
-}

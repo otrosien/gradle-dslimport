@@ -2,11 +2,11 @@ model {
     tasks {
         // possible to inline additional tasks
         listAddresses(Task) {
-            def people = $.people
+            def customers = $.customers
             doLast {
-                people.each { p ->
-                    if(p.address?.city != null) {
-                        println "Hey $p.firstName. Your address is $p.address.street, $p.address.city!"
+                customers.each { c ->
+                    if(c.address != null && !c.address.empty) {
+                        println " ${c.fullName}, you're from ${c.address.street}, ${c.address.city}"
                     }
                 }
             }
