@@ -23,11 +23,11 @@ import com.epages.dslimport.*
 apply plugin: CustomerPlugin
 apply plugin: ProductPlugin
 
-if (project.properties.randomCustomers > 0) {
+def randomCustomers = Integer.valueOf(project.properties.randomCustomers)
+
+if (randomCustomers > 0) {
     apply plugin: RandomCustomerPlugin
 }
-
-def randomCustomers = Integer.valueOf(project.properties.randomCustomers)
 
 model {
     customers {

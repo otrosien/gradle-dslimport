@@ -5,4 +5,4 @@ sudo: false
 cache:
   directories:
   - $HOME/.gradle
-script: ./gradlew model greetCustomers listAddresses listProducts
+script: ./gradlew model greetCustomers listAddresses listProducts -PrandomCustomers=10
