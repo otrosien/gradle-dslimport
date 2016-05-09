@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/otrosien/gradle-dslimport.png)](https://travis-ci.org/otrosien/gradle-dslimport)
+
 # Testing the Gradle Software Model
 
 This is a sample project using the new Software model by gradle defining and using a DSL for customers and addreses.
